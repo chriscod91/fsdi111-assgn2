@@ -52,3 +52,10 @@ def deactivate_user(user_id):
     cursor.execute("UPDATE user SET active=0 WHERE id=?", (user_id, ))
     cursor.commit()
     cursor.close()
+
+def select_user(user_id):
+    cursor = get_db()
+    cursor.execute("SELECT * FROM user WHERE id=?", (user_id, ))
+    results = cursor.fetchall()
+    cursor.close()
+    return output_formatter(results)

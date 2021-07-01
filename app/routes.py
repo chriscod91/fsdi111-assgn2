@@ -1,17 +1,18 @@
 
-from flask import Flask, request
+from flask import Flask, request, render_template
 from app.database import (
     scan, insert, 
-    deactivate_user
-    )
+    deactivate_user,
+    select_user,
+)
 
-app =Flask(__name__)
+
 
 app = Flask(__name__)
 
 @app.route("/")
 def get_index():
-    return render_templates("index.html")
+    return render_template("index.html")
     
 @app.route("/users")
 def GET_all_users():
@@ -52,3 +53,19 @@ def delete_user(uid):
 def agent():
     user_agent = request.headers.get("csrftoken")
     return "<p>Your user agent is: %s</p>" % user_agent
+
+@app.route("/users/<int:uid>", methods=["GET"])
+def get_user(uid):
+   # out = {
+    #    "ok": True,
+     #   "message": "Success"
+    #}
+
+    user_list = select_user(uid)
+    if user_list:
+        return render_template("user_detail.html", user=user_list[0])
+    return render_template("404.html"), 404
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404

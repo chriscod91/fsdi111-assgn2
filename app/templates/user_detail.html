@@ -5,8 +5,8 @@ About {{ data["users"][0]["first_name"] }}
 {% endblock title %}
 
 {% block content %}
-    <h1>About {{ user["users"][0]["first_name"] }} {{ user["last_name"]</h1>
-    <p>hello, my name is {{ user["users"][0]["first_name"] }}
-        my hobbies are {{ user["hobbies"]}}
+    <h1>About {{ user.first_name }} {{ user.last_name }}</h1>
+    <p>hello, my name is {{ users.first_name }}
+        my hobbies are {{ user.hobbies }}
     </p>
 {% endblock content %}
